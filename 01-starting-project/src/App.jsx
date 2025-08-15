@@ -36,20 +36,11 @@ function App() {
                 <section id="core-concepts">
                     <h2>Core Concepts</h2>
                     <ul>
-                        <CoreConcepts
-                            {...componentsData[0]}
-                        />
-                        <CoreConcepts
-                            {...componentsData[1]}
-                        />
-                        <CoreConcepts
-                            {...componentsData[2]}
-                        />
-                        <CoreConcepts
-                            title={componentsData[3].title}
-                            description={componentsData[3].description}
-                            image={componentsData[3].image}
-                        />
+                        {
+                            componentsData.map((component, index) => (
+                                <CoreConcepts key={component.title} {...component} />
+                            ))
+                        }
                     </ul>
                 </section>
                 <section id="examples">

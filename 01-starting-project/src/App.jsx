@@ -1,45 +1,34 @@
-import reactImg from './assets/react-core-concepts.png'
 import {CORE_CONCEPTS as componentsData} from "./data.js";
+import {Header} from "./components/Header";
+import {CoreConcepts} from "./components/CoreConcept";
+import TabButton from "./components/TabButton"
 import {useState} from "react";
+import {EXAMPLES} from "./data"
 
-const reactDescriptions = ["Fundamental", "Crucial", "Core"];
-
-function genRandomInt(max) {
-    return Math.floor(Math.random() * (max + 1));
-}
-
-
-function Header() {
-
-    const description = useState(
-        () => reactDescriptions[genRandomInt(2)]
-    );
-    // const description = reactDescriptions[genRandomInt(2)]
-
-    return (
-        <header>
-            <img src={reactImg} alt="Stylized atom"/>
-            <h1><h1>React Essentials</h1></h1>
-            <p>
-                {description} React concepts you will need for almost any app you are
-                going to build!
-            </p>
-        </header>
-    )
-}
-
-
-function CoreConcepts({image, title, description}) {
-    return (
-        <li>
-            <img src={image} alt={title}/>
-            <h3>{title}</h3>
-            <p>{description}</p>
-        </li>
-    )
-}
 
 function App() {
+
+    const [selectedTab, setSelectedTab] = useState(null);
+    const handleTabSelect = (tabName) => {
+        setSelectedTab(tabName.toLowerCase());
+        console.log(`Selected tab: ${tabName}`);
+    };
+
+    let tabContent = <p>Please select a topic</p>
+    if (selectedTab) {
+        tabContent = (
+            <div id="tab-content">
+                <h3>{EXAMPLES[selectedTab].title}</h3>
+                <p>{EXAMPLES[selectedTab].description}</p>
+                <pre>
+                        <code>
+                            {EXAMPLES[selectedTab].code}
+                        </code>
+                    </pre>
+            </div>
+        );
+    }
+
     return (
         <div>
             <Header/>
@@ -63,7 +52,17 @@ function App() {
                         />
                     </ul>
                 </section>
-
+                <section id="examples">
+                    <h2>Examples</h2>
+                    <menu>
+                        <TabButton isSelected={selectedTab === "components"}
+                                   onSelect={handleTabSelect}>Components</TabButton>
+                        <TabButton isSelected={selectedTab === "jsx"} onSelect={handleTabSelect}>JSX</TabButton>
+                        <TabButton isSelected={selectedTab === "props"} onSelect={handleTabSelect}>Props</TabButton>
+                        <TabButton isSelected={selectedTab === "state"} onSelect={handleTabSelect}>State</TabButton>
+                    </menu>
+                    {tabContent}
+                </section>
             </main>
         </div>
     );

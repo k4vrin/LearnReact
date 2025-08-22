@@ -15,6 +15,7 @@ function App() {
     };
 
     let tabContent = <p>Please select a topic</p>
+    // If selectedTab is not null. truthy value
     if (selectedTab) {
         tabContent = (
             <div id="tab-content">
@@ -37,7 +38,7 @@ function App() {
                     <h2>Core Concepts</h2>
                     <ul>
                         {
-                            componentsData.map((component, index) => (
+                            componentsData.map((component) => (
                                 <CoreConcepts key={component.title} {...component} />
                             ))
                         }
